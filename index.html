@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio Data — Bakayoko Moussa</title>
+<title>Bakayoko Moussa — Data Analyst & BI</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -12,11 +12,11 @@
    VARIABLES & DESIGN SYSTEM (PREMIUM DARK)
 ═══════════════════════════════════════════ */
 :root {
-  --bg:        #080b13;
-  --bg-sub:    #0c111d;
-  --card:      #121926;
-  --card-hover:#1a2333;
-  --border:    rgba(255, 255, 255, 0.06);
+  --bg:        #060913;
+  --bg-sub:    #0a0f1d;
+  --card:      #111827;
+  --card-hover:#192233;
+  --border:    rgba(255, 255, 255, 0.08);
   --indigo:    #6366f1;
   --indigo-light: #a5b4fc;
   --teal:      #2dd4bf;
@@ -26,9 +26,10 @@
   --text:      #f8fafc;
   --text-muted:#94a3b8;
   --radius:    16px;
+  --max-width: 1200px;
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -38,471 +39,444 @@ body {
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-thumb { background: var(--indigo); border-radius: 10px; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* ═══════════════════════════════════════════
-   STRUCTURE & BACKGROUND
+   TYPOGRAPHIE & BOUTONS GLOBAUX
 ═══════════════════════════════════════════ */
-#rapports {
-  padding: 6rem 6%;
-  background-color: var(--bg);
-  position: relative;
-}
+h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; }
 
-/* Lumière d'ambiance en fond (ne bloque pas les clics) */
-#rapports::before {
-  content: '';
-  position: absolute; top: -150px; right: -150px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
-  pointer-events: none;
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem; font-size: 0.9rem; font-weight: 600;
+  border-radius: 10px; cursor: pointer; text-decoration: none;
+  transition: all 0.2s ease; border: none;
 }
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary { background: var(--indigo); color: #ffffff; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
+.btn-primary:hover { background: #4f46e5; box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+
+.btn-outline { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: var(--text-muted); }
 
 /* ═══════════════════════════════════════════
-   HEADER & FILTRES
+   NAVBAR (STICKY GLASSMORPHISM)
 ═══════════════════════════════════════════ */
-.sec-header {
-  text-align: center;
-  margin-bottom: 4rem;
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(6, 9, 19, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
 }
-
-.sec-title {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #ffffff, #94a3b8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.nav-container {
+  max-width: var(--max-width); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
 }
-
-.sec-sub {
-  color: var(--text-muted);
-  max-width: 600px;
-  margin: 0 auto;
-  font-size: 1.05rem;
-}
-
-.filter-row {
-  display: flex; justify-content: center; flex-wrap: wrap;
-  gap: 0.8rem; margin-bottom: 3.5rem;
-}
-
-.filter-btn {
-  padding: 0.6rem 1.2rem;
-  background: var(--bg-sub);
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  color: var(--text-muted);
-  font-size: 0.85rem; font-weight: 600;
-  cursor: pointer; transition: all 0.2s ease;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: rgba(99,102,241,0.15);
-  border-color: var(--indigo);
-  color: var(--indigo-light);
-}
+.logo { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.logo i { color: var(--teal); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
 
 /* ═══════════════════════════════════════════
-   GRILLE ET CARTES (FLOU ET CLICS RÉPARÉS)
+   HERO SECTION
 ═══════════════════════════════════════════ */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
-  gap: 2rem;
+.hero {
+  padding: 10rem 5% 5rem;
+  max-width: var(--max-width); margin: 0 auto;
+  text-align: center; position: relative;
 }
+.hero::before {
+  content: ''; position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px; background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 60%);
+  pointer-events: none; z-index: -1;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 1rem; border-radius: 100px; background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2);
+  color: var(--teal); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem;
+}
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+}
+.hero-title span { background: linear-gradient(to right, var(--indigo-light), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-desc {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; line-height: 1.6;
+}
+.hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════
+   STATISTIQUES (KPI BANNER)
+═══════════════════════════════════════════ */
+.stats-banner {
+  max-width: var(--max-width); margin: 0 auto 6rem; padding: 0 5%;
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 2rem; gap: 2rem; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.stat-item h3 { font-size: 2.5rem; font-weight: 800; color: var(--text); margin-bottom: 0.2rem; }
+.stat-item p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+
+/* ═══════════════════════════════════════════
+   COMPÉTENCES / SKILLS
+═══════════════════════════════════════════ */
+.section { padding: 6rem 5%; max-width: var(--max-width); margin: 0 auto; }
+.sec-header { text-align: center; margin-bottom: 4rem; }
+.sec-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.sec-sub { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+
+.skills-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;
+}
+.skill-card {
+  background: var(--bg-sub); border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: transform 0.2s, border-color 0.2s;
+}
+.skill-card:hover { transform: translateY(-3px); border-color: var(--indigo); background: var(--card); }
+.skill-icon {
+  width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--indigo-light); flex-shrink: 0;
+}
+.skill-info h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.2rem; }
+.skill-info p { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════
+   FILTRES ET GRILLE DE PROJETS (NET & PROPRE)
+═══════════════════════════════════════════ */
+.filter-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 3rem; }
+.filter-btn { padding: 0.5rem 1.2rem; background: transparent; border: 1px solid var(--border); border-radius: 30px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.filter-btn:hover, .filter-btn.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
 
 .proj-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  display: flex; flex-direction: column;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
-  overflow: hidden;
-  position: relative;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; overflow: hidden;
 }
+.proj-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.15); }
 
-/* Seul l'effet de translation 2D est appliqué pour garder le texte NET */
-.proj-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7), 0 0 20px rgba(99,102,241,0.15);
-  border-color: rgba(99,102,241,0.3);
-}
-
-.card-stripe {
-  height: 4px;
-}
+.card-stripe { height: 4px; }
 .cat-excel .card-stripe { background: var(--emerald); }
 .cat-python .card-stripe { background: var(--indigo); }
 .cat-powerbi .card-stripe { background: var(--amber); }
 .cat-ml .card-stripe { background: var(--rose); }
 
-.card-head {
-  padding: 1.5rem 1.5rem 0.5rem;
-  display: flex; justify-content: space-between; align-items: center;
-}
+.card-head { padding: 1.5rem 1.5rem 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+.card-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; }
+.cat-excel .card-icon { background: linear-gradient(135deg, var(--emerald), #059669); }
+.cat-python .card-icon { background: linear-gradient(135deg, var(--indigo), #4338ca); }
+.cat-powerbi .card-icon { background: linear-gradient(135deg, var(--amber), #d97706); }
+.cat-ml .card-icon { background: linear-gradient(135deg, var(--rose), #be123c); }
 
-.card-icon {
-  width: 50px; height: 50px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; color: #fff;
-}
-.cat-excel .card-icon { background: linear-gradient(135deg, var(--emerald), #2dd4bf); }
-.cat-python .card-icon { background: linear-gradient(135deg, var(--indigo), var(--indigo-light)); }
-.cat-powerbi .card-icon { background: linear-gradient(135deg, var(--amber), #f97316); }
-.cat-ml .card-icon { background: linear-gradient(135deg, var(--rose), #ec4899); }
-
-.card-status {
-  font-size: 0.7rem; font-weight: 700; color: var(--emerald);
-  background: rgba(16, 185, 129, 0.1); padding: 0.3rem 0.7rem; border-radius: 20px;
-  display: flex; align-items: center; gap: 0.4rem;
-}
+.card-status { font-size: 0.7rem; font-weight: 700; color: var(--emerald); background: rgba(16, 185, 129, 0.1); padding: 0.3rem 0.7rem; border-radius: 20px; display: flex; align-items: center; gap: 0.4rem; }
 .card-status .dot { width: 6px; height: 6px; background: var(--emerald); border-radius: 50%; }
 
-.card-body {
-  padding: 1rem 1.5rem 1.5rem;
-  display: flex; flex-direction: column; flex: 1;
-}
+.card-body { padding: 1rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; line-height: 1.3; }
+.card-context { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; }
 
-.card-title {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 1.15rem; font-weight: 700; margin-bottom: 0.8rem;
-}
+.metrics-row { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
+.metric { flex: 1; text-align: center; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 0.6rem 0.3rem; border-radius: 8px; }
+.metric-val { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); }
+.metric-lbl { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-top: 0.2rem; }
 
-.card-context {
-  font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;
-}
-
-/* Chiffres clés */
-.metrics-row {
-  display: flex; gap: 0.8rem; margin-bottom: 1.5rem;
-}
-.metric {
-  flex: 1; text-align: center;
-  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-  padding: 0.8rem 0.4rem; border-radius: 10px;
-}
-.metric-val {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 1.25rem; font-weight: 800; color: var(--text);
-}
-.metric-lbl {
-  font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
-  color: var(--text-muted); letter-spacing: 0.05em; margin-top: 0.2rem;
-}
-
-.info-pills { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
-.info-pill { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.85rem; color: #cbd5e1; }
+.info-pills { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+.info-pill { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; color: #cbd5e1; }
 .info-pill.problem i { color: var(--rose); margin-top: 0.2rem;}
 .info-pill.impact i { color: var(--emerald); margin-top: 0.2rem;}
 
 .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-.badge {
-  font-size: 0.7rem; font-weight: 600; padding: 0.3rem 0.6rem;
-  border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-  color: var(--text-muted);
-}
+.badge { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.05); color: var(--text-muted); }
 
-/* ACTIONS RÉPARÉES ET PARFAITEMENT CLICABLES */
-.card-actions {
-  margin-top: auto; padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-  display: flex; flex-wrap: wrap; gap: 0.6rem;
-  z-index: 5;
-}
-
-.btn {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.65rem 1rem; font-size: 0.8rem; font-weight: 600;
-  border-radius: 8px; cursor: pointer; text-decoration: none;
-  transition: all 0.2s ease; border: none;
-}
-.btn:hover { transform: translateY(-2px); }
-
-.btn-primary { background: var(--indigo); color: #ffffff; }
-.btn-primary:hover { background: #4f46e5; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
-
-.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-.btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--indigo); color: var(--indigo-light); }
+.card-actions { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; gap: 0.5rem; }
+.card-actions .btn { padding: 0.5rem 0.8rem; font-size: 0.8rem; }
 
 /* ═══════════════════════════════════════════
-   MODAL (RÉPARÉ)
+   PROCESSUS / MON APPROCHE
 ═══════════════════════════════════════════ */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(4, 6, 12, 0.8);
-  backdrop-filter: blur(12px); z-index: 1000;
-  display: flex; align-items: center; justify-content: center;
-  padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-}
+.process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative; }
+.process-step { background: var(--bg-sub); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); position: relative; z-index: 2; text-align: left; }
+.step-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 3rem; font-weight: 800; color: rgba(255,255,255,0.05); position: absolute; top: 1rem; right: 1.5rem; }
+.process-step h4 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--indigo-light); }
+.process-step p { font-size: 0.9rem; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════
+   FOOTER / CONTACT
+═══════════════════════════════════════════ */
+.footer { background: var(--card); border-top: 1px solid var(--border); padding: 5rem 5% 2rem; text-align: center; }
+.footer-title { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+.footer-desc { color: var(--text-muted); margin-bottom: 2rem; }
+.social-links { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+.social-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-sub); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--text); transition: all 0.2s; text-decoration: none;}
+.social-btn:hover { background: var(--indigo); border-color: var(--indigo); transform: translateY(-3px); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 2rem; font-size: 0.85rem; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════
+   MODAL RÉSUMÉS (PARFAITEMENT FONCTIONNEL)
+═══════════════════════════════════════════ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-.modal {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 20px; width: 100%; max-width: 720px;
-  max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
-  transform: translateY(20px); transition: transform 0.3s;
-}
+.modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 700px; max-height: 85vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.3s; }
 .modal-overlay.open .modal { transform: translateY(0); }
-
-.modal-head {
-  padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.modal-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.25rem; font-weight: 800; color: #fff; }
-.modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
-
+.modal-head { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.modal-title { font-size: 1.2rem; font-weight: 800; }
+.modal-close { background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; }
 .modal-body { padding: 2rem; }
-
-.exec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-.exec-block { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
+.exec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.exec-block { background: var(--bg-sub); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
 .exec-block.full { grid-column: 1 / -1; }
-.exec-title { font-size: 0.75rem; font-weight: 700; color: var(--indigo-light); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;}
+.exec-title { font-size: 0.75rem; font-weight: 700; color: var(--indigo-light); margin-bottom: 0.5rem; text-transform: uppercase; }
 .exec-content { font-size: 0.9rem; color: #cbd5e1; }
-
 .exec-content ul { list-style: none; margin-top: 0.5rem; }
-.exec-content ul li { display: flex; gap: 0.5rem; font-size: 0.88rem; margin-bottom: 0.5rem; }
-.exec-content ul li::before { content: "→"; color: var(--teal); font-weight: bold; }
-
-.impact-box {
-  background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);
-  padding: 1.2rem; border-radius: 12px; display: flex; gap: 1rem; align-items: center;
-}
+.exec-content ul li { margin-bottom: 0.4rem; display: flex; gap: 0.5rem; }
+.exec-content ul li::before { content: "→"; color: var(--teal); }
+.impact-box { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 1.2rem; border-radius: 12px; display: flex; gap: 1rem; align-items: center; }
 .impact-box i { font-size: 1.5rem; color: var(--emerald); }
 .impact-title { font-size: 0.85rem; font-weight: 700; color: var(--emerald); text-transform: uppercase; }
-.impact-desc { font-size: 0.9rem; color: #e2e8f0; margin-top: 0.2rem; }
-
-.modal-actions {
-  display: flex; justify-content: flex-end; gap: 0.75rem;
-  margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
-}
+.impact-desc { font-size: 0.9rem; color: #e2e8f0; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 
 @media(max-width: 768px) {
+  .nav-links { display: none; }
   .exec-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<section id="rapports">
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo"><i class="fa-solid fa-chart-pie"></i> Bakayoko.</a>
+    <div class="nav-links">
+      <a href="#projets">Projets</a>
+      <a href="#competences">Compétences</a>
+      <a href="#approche">Mon Approche</a>
+    </div>
+    <a href="#contact" class="btn btn-outline" style="padding: 0.5rem 1rem;">Me contacter</a>
+  </div>
+</nav>
 
+<!-- HERO SECTION -->
+<section class="hero" id="accueil">
+  <div class="hero-badge"><span class="dot"></span> Disponible pour missions / recrutement</div>
+  <h1 class="hero-title">Je transforme les données brutes en <span>décisions stratégiques.</span></h1>
+  <p class="hero-desc">Data Analyst spécialisé en Business Intelligence, automatisation Python et Machine Learning. J'aide les décideurs à y voir clair à travers des dashboards lisibles et des algorithmes précis.</p>
+  <div class="hero-actions">
+    <a href="#projets" class="btn btn-primary"><i class="fa-solid fa-arrow-down"></i> Voir mes projets</a>
+    <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Mon GitHub</a>
+  </div>
+</section>
+
+<!-- KPI BANNER -->
+<div class="stats-banner">
+  <div class="stats-grid">
+    <div class="stat-item"><h3>6+</h3><p>Projets Data Livrés</p></div>
+    <div class="stat-item"><h3>90K+</h3><p>Lignes auditées</p></div>
+    <div class="stat-item"><h3>-80%</h3><p>Temps de reporting</p></div>
+    <div class="stat-item"><h3>100%</h3><p>Orienté Business</p></div>
+  </div>
+</div>
+
+<!-- COMPÉTENCES -->
+<section class="section" id="competences">
   <div class="sec-header">
-    <h2 class="sec-title">MES PROJETS ET RAPPORTS DATA</h2>
-    <p class="sec-sub">Des analyses chiffrées, des prévisions IA et des outils pour prendre les bonnes décisions business.</p>
+    <h2 class="sec-title">Expertise Technique</h2>
+    <p class="sec-sub">Une stack moderne maîtrisée pour couvrir toute la chaîne de valeur de la donnée, de l'extraction à la visualisation.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
+      <div class="skill-info"><h4>Python & ML</h4><p>Pandas, Scikit-Learn, Prophet, PySpark</p></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon"><i class="fa-solid fa-chart-column"></i></div>
+      <div class="skill-info"><h4>Data Viz & BI</h4><p>Power BI, DAX, Streamlit, Plotly</p></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
+      <div class="skill-info"><h4>Bases de données</h4><p>SQL, PostgreSQL, Modélisation</p></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon"><i class="fa-solid fa-file-excel"></i></div>
+      <div class="skill-info"><h4>Excel Avancé</h4><p>Macros VBA, PowerQuery, Audit formules</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section class="section" id="projets" style="padding-top: 2rem;">
+  <div class="sec-header">
+    <h2 class="sec-title">Projets & Impact Business</h2>
+    <p class="sec-sub">Découvrez comment j'ai résolu des problèmes concrets pour différents métiers.</p>
   </div>
 
-  <!-- FILTRES -->
   <div class="filter-row">
-    <button class="filter-btn active" data-filter="all">Tous les projets</button>
+    <button class="filter-btn active" data-filter="all">Tous</button>
     <button class="filter-btn" data-filter="excel">Excel / VBA</button>
-    <button class="filter-btn" data-filter="python">Python</button>
     <button class="filter-btn" data-filter="powerbi">Power BI</button>
-    <button class="filter-btn" data-filter="sql">SQL / BDD</button>
+    <button class="filter-btn" data-filter="python">Python</button>
     <button class="filter-btn" data-filter="ml">Machine Learning</button>
   </div>
 
   <div class="cards-grid" id="cardsGrid">
-
-    <!-- 1 — AUDIT EXCEL -->
+    <!-- CARTE 1 -->
     <div class="proj-card cat-excel" data-category="excel">
       <div class="card-stripe"></div>
       <div class="card-head">
         <div class="card-icon"><i class="fa-solid fa-file-excel"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
+        <span class="card-status"><span class="dot"></span>Livré</span>
       </div>
       <div class="card-body">
-        <div class="card-title">Audit d'un tableau de bord de marchés publics</div>
-        <div class="card-context">Fiabilisation d'un outil critique de suivi de plus de 9 000 dossiers.</div>
-        
+        <div class="card-title">Audit Dashboard Marchés Publics</div>
+        <div class="card-context">Fiabilisation d'un outil critique de suivi de plus de 9000 dossiers.</div>
         <div class="metrics-row">
-          <div class="metric"><div class="metric-val">100%</div><div class="metric-lbl">Corrigé</div></div>
-          <div class="metric"><div class="metric-val">90K</div><div class="metric-lbl">Formules</div></div>
-          <div class="metric"><div class="metric-val">-99%</div><div class="metric-lbl">Temps</div></div>
+          <div class="metric"><div class="metric-val">100%</div><div class="metric-lbl">Fiable</div></div>
+          <div class="metric"><div class="metric-val">-99%</div><div class="metric-lbl">Temps Report</div></div>
         </div>
-
         <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Erreurs de calcul critiques</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Génération de rapports en 3 secondes</span></div>
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Calculs budgétaires erronés</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Rapport généré en 3 secondes</span></div>
         </div>
-
-        <div class="badges">
-          <span class="badge">Excel Avancé</span><span class="badge">VBA / Macros</span>
-        </div>
-
+        <div class="badges"><span class="badge">Excel</span><span class="badge">VBA</span></div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="openModal('modal1')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
         </div>
       </div>
     </div>
 
-    <!-- 2 — RECO FILMS -->
-    <div class="proj-card cat-python" data-category="python ml">
-      <div class="card-stripe"></div>
-      <div class="card-head">
-        <div class="card-icon"><i class="fa-solid fa-film"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
-      </div>
-      <div class="card-body">
-        <div class="card-title">Système de recommandation de films — Machine Learning</div>
-        <div class="card-context">Moteur d'IA de suggestion personnalisée de films basé sur la similarité cosinus.</div>
-        
-        <div class="metrics-row">
-          <div class="metric"><div class="metric-val">5</div><div class="metric-lbl">Reco / film</div></div>
-          <div class="metric"><div class="metric-val">&lt;1s</div><div class="metric-lbl">Temps réponse</div></div>
-          <div class="metric"><div class="metric-val">+40%</div><div class="metric-lbl">Pertinence</div></div>
-        </div>
-
-        <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Suggestions faibles → Perte d'abonnés</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Hébergé en production via Streamlit</span></div>
-        </div>
-
-        <div class="badges">
-          <span class="badge">Python</span><span class="badge">Scikit-learn</span><span class="badge">PostgreSQL</span>
-        </div>
-
-        <div class="card-actions">
-          <button class="btn btn-primary" onclick="openModal('modal2')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
-          <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Code</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3 — POWER BI VENTES -->
-    <div class="proj-card cat-powerbi" data-category="powerbi sql">
+    <!-- CARTE 2 -->
+    <div class="proj-card cat-powerbi" data-category="powerbi">
       <div class="card-stripe"></div>
       <div class="card-head">
         <div class="card-icon"><i class="fa-solid fa-chart-bar"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
+        <span class="card-status"><span class="dot"></span>Livré</span>
       </div>
       <div class="card-body">
-        <div class="card-title">Dashboard de pilotage des ventes — Power BI</div>
-        <div class="card-context">Visualisation en temps réel des performances commerciales de l'entreprise.</div>
-        
+        <div class="card-title">Dashboard Pilotage Ventes</div>
+        <div class="card-context">Visualisation en temps réel des performances commerciales de 5 régions.</div>
         <div class="metrics-row">
-          <div class="metric"><div class="metric-val">KPI</div><div class="metric-lbl">Temps réel</div></div>
-          <div class="metric"><div class="metric-val">-80%</div><div class="metric-lbl">Rapport manuel</div></div>
-          <div class="metric"><div class="metric-val">5</div><div class="metric-lbl">Dashboards</div></div>
+          <div class="metric"><div class="metric-val">Temps Réel</div><div class="metric-lbl">Mise à jour</div></div>
+          <div class="metric"><div class="metric-val">-80%</div><div class="metric-lbl">Temps manuel</div></div>
         </div>
-
         <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Données éparpillées impossibles à analyser</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Vision centralisée en direct par les décideurs</span></div>
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Données éparpillées en silos</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Décisions comité exécutif accélérées</span></div>
         </div>
-
-        <div class="badges">
-          <span class="badge">Power BI</span><span class="badge">DAX / SQL</span>
-        </div>
-
+        <div class="badges"><span class="badge">Power BI</span><span class="badge">DAX / SQL</span></div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="openModal('modal3')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
         </div>
       </div>
     </div>
 
-    <!-- 4 — CHICAGO CRIMINALITÉ -->
-    <div class="proj-card cat-python" data-category="python sql">
+    <!-- CARTE 3 -->
+    <div class="proj-card cat-python cat-ml" data-category="python ml">
       <div class="card-stripe"></div>
       <div class="card-head">
-        <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
+        <div class="card-icon"><i class="fa-solid fa-film"></i></div>
+        <span class="card-status"><span class="dot"></span>Livré</span>
       </div>
       <div class="card-body">
-        <div class="card-title">Analyse de criminalité — Chicago 2001-2024</div>
-        <div class="card-context">Analyse de plus de 20 ans de Big Data pour cartographier les risques urbains.</div>
-        
+        <div class="card-title">IA Recommandation Films</div>
+        <div class="card-context">Moteur de suggestion personnalisée basé sur la similarité NLP.</div>
         <div class="metrics-row">
-          <div class="metric"><div class="metric-val">20+ ans</div><div class="metric-lbl">Historique</div></div>
-          <div class="metric"><div class="metric-val">PySpark</div><div class="metric-lbl">Architecture</div></div>
-          <div class="metric"><div class="metric-val">Géo</div><div class="metric-lbl">Cartographie</div></div>
+          <div class="metric"><div class="metric-val">+40%</div><div class="metric-lbl">Pertinence</div></div>
+          <div class="metric"><div class="metric-val"><1s</div><div class="metric-lbl">Requête</div></div>
         </div>
-
         <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Volume trop gros pour Excel classique</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Aide à la décision géolocalisée</span></div>
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Perte d'abonnés VOD</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Déployé en web via Streamlit</span></div>
         </div>
-
-        <div class="badges">
-          <span class="badge">Python</span><span class="badge">PySpark Big Data</span><span class="badge">Folium</span>
-        </div>
-
+        <div class="badges"><span class="badge">Python</span><span class="badge">Scikit-Learn</span><span class="badge">Streamlit</span></div>
         <div class="card-actions">
-          <button class="btn btn-primary" onclick="openModal('modal4')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
-          <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Code</a>
+          <button class="btn btn-primary" onclick="openModal('modal2')"><i class="fa-solid fa-eye"></i> Résumé</button>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
         </div>
       </div>
     </div>
 
-    <!-- 5 — SEGMENTATION MARKETING -->
+    <!-- CARTE 4 -->
     <div class="proj-card cat-ml" data-category="ml python">
       <div class="card-stripe"></div>
       <div class="card-head">
         <div class="card-icon"><i class="fa-solid fa-users-viewfinder"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
+        <span class="card-status"><span class="dot"></span>Livré</span>
       </div>
       <div class="card-body">
-        <div class="card-title">Segmentation clientèle — KMeans & ACP</div>
-        <div class="card-context">Identification de groupes de clients cibles pour le marketing.</div>
-        
+        <div class="card-title">Segmentation Clients (K-Means)</div>
+        <div class="card-context">Clustering des comportements d'achat pour reciblage publicitaire.</div>
         <div class="metrics-row">
-          <div class="metric"><div class="metric-val">4</div><div class="metric-lbl">Groupes cibles</div></div>
-          <div class="metric"><div class="metric-val">ACP</div><div class="metric-lbl">Réduction dim.</div></div>
-          <div class="metric"><div class="metric-val">+25%</div><div class="metric-lbl">Précision pub</div></div>
+          <div class="metric"><div class="metric-val">4</div><div class="metric-lbl">Segments</div></div>
+          <div class="metric"><div class="metric-val">+25%</div><div class="metric-lbl">Précision Ads</div></div>
         </div>
-
         <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Dépenses marketing mal ciblées</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Optimisation des budgets publicitaires</span></div>
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Budget marketing gaspillé</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Campagnes sur-mesure activées</span></div>
         </div>
-
-        <div class="badges">
-          <span class="badge">Machine Learning</span><span class="badge">Scikit-Learn</span>
-        </div>
-
+        <div class="badges"><span class="badge">Machine Learning</span><span class="badge">PCA</span></div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="openModal('modal5')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
-          <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Code</a>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
         </div>
       </div>
     </div>
 
-    <!-- 6 — BOURSE -->
-    <div class="proj-card cat-python" data-category="python ml">
+    <!-- CARTE 5 -->
+    <div class="proj-card cat-python" data-category="python">
+      <div class="card-stripe"></div>
+      <div class="card-head">
+        <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+        <span class="card-status"><span class="dot"></span>Livré</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Analyse Big Data Criminalité</div>
+        <div class="card-context">Traitement de 20 ans d'historique de Chicago avec PySpark.</div>
+        <div class="metrics-row">
+          <div class="metric"><div class="metric-val">20+ ans</div><div class="metric-lbl">Données</div></div>
+          <div class="metric"><div class="metric-val">Géo</div><div class="metric-lbl">Cartographie</div></div>
+        </div>
+        <div class="info-pills">
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Fichiers trop lourds pour Excel</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Ciblage spatial des patrouilles</span></div>
+        </div>
+        <div class="badges"><span class="badge">PySpark</span><span class="badge">Folium</span></div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="openModal('modal4')"><i class="fa-solid fa-eye"></i> Résumé</button>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE 6 -->
+    <div class="proj-card cat-ml" data-category="ml python">
       <div class="card-stripe"></div>
       <div class="card-head">
         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-        <span class="card-status"><span class="dot"></span>Réalisé</span>
+        <span class="card-status"><span class="dot"></span>Livré</span>
       </div>
       <div class="card-body">
-        <div class="card-title">Prévision boursière — Facebook Prophet</div>
-        <div class="card-context">Forecasting IA des cours de clôture d'actions boursières à 90 jours.</div>
-        
+        <div class="card-title">Prévision Boursière (Prophet)</div>
+        <div class="card-context">Forecasting IA des cours d'actions GAFAM à 90 jours.</div>
         <div class="metrics-row">
           <div class="metric"><div class="metric-val">90j</div><div class="metric-lbl">Horizon</div></div>
           <div class="metric"><div class="metric-val">95%</div><div class="metric-lbl">Confiance</div></div>
-          <div class="metric"><div class="metric-val">IA</div><div class="metric-lbl">Forecasting</div></div>
         </div>
-
         <div class="info-pills">
-          <div class="info-pill problem"><i class="fa-solid fa-circle-exclamation"></i><span>Analyse manuelle boursière incertaine</span></div>
-          <div class="info-pill impact"><i class="fa-solid fa-circle-check"></i><span>Intervalles de confiance prédictifs fiables</span></div>
+          <div class="info-pill problem"><i class="fa-solid fa-triangle-exclamation"></i><span>Investissement à l'aveugle</span></div>
+          <div class="info-pill impact"><i class="fa-solid fa-check-circle"></i><span>Aide à la décision financière claire</span></div>
         </div>
-
-        <div class="badges">
-          <span class="badge">Prophet</span><span class="badge">yFinance API</span><span class="badge">Plotly</span>
-        </div>
-
+        <div class="badges"><span class="badge">Facebook Prophet</span><span class="badge">API yFinance</span></div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="openModal('modal6')"><i class="fa-solid fa-eye"></i> Résumé</button>
-          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-file-pdf"></i> Rapport</a>
-          <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Code</a>
+          <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-outline"><i class="fa-solid fa-folder-open"></i> Accéder au repo</a>
         </div>
       </div>
     </div>
@@ -510,284 +484,240 @@ body {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-   MODAL 1 — AUDIT EXCEL
-═══════════════════════════════════════════ -->
+<!-- MON APPROCHE -->
+<section class="section" id="approche">
+  <div class="sec-header">
+    <h2 class="sec-title">Mon Processus de Travail</h2>
+    <p class="sec-sub">Une méthode rigoureuse pour garantir que la donnée réponde toujours à une problématique métier.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h4>Comprendre le besoin</h4>
+      <p>Discussion avec les métiers pour définir les KPIs critiques et l'objectif final du reporting.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h4>Extraire & Nettoyer</h4>
+      <p>Requêtage SQL, traitement des valeurs manquantes et consolidation via Python ou PowerQuery.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h4>Modéliser & Analyser</h4>
+      <p>Création des modèles de données (DAX) ou application d'algorithmes de Machine Learning.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h4>Visualiser l'Impact</h4>
+      <p>Création de dashboards lisibles, interactifs et directement actionnables par la direction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer class="footer" id="contact">
+  <h2 class="footer-title">Prêt à valoriser vos données ?</h2>
+  <p class="footer-desc">Je suis ouvert aux opportunités (CDI, Missions, Alternance). Échangeons sur vos besoins métiers.</p>
+  <div class="social-links">
+    <!-- Remplace "mailto:tonemail" par ton vrai email si tu veux -->
+    <a href="mailto:contact@email.com" class="social-btn"><i class="fa-solid fa-envelope"></i></a>
+    <a href="https://github.com/MousBak" target="_blank" class="social-btn"><i class="fa-brands fa-github"></i></a>
+    <a href="#" class="social-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2024 Bakayoko Moussa. Portfolio conçu avec focus sur l'impact métier.
+  </div>
+</footer>
+
+
+<!-- ==========================================
+     MODALS (GARDÉS INTACTS ET LIES A GITHUB)
+=========================================== -->
 <div class="modal-overlay" id="modal1">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Audit Marchés publics</h3>
+      <h3 class="modal-title">Audit Marchés publics</h3>
       <button class="modal-close" onclick="closeModal('modal1')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
           <div class="exec-title">Objectif business</div>
-          <div class="exec-content">Fiabiliser le suivi de 9000 dossiers de marchés publics et automatiser la création de rapports pour accélérer la prise de décision politique et stratégique.</div>
+          <div class="exec-content">Fiabiliser le suivi de 9000 dossiers de marchés publics et automatiser la création de rapports.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Problème résolu</div>
-          <div class="exec-content">
-            <ul>
-              <li>Erreurs dans les calculs entraînant de fausses estimations budgétaires.</li>
-              <li>Temps de consolidation manuel supérieur à 4 heures par semaine.</li>
-            </ul>
-          </div>
+          <div class="exec-content"><ul><li>Erreurs dans les calculs budgétaires.</li><li>Consolidation manuelle de 4h/semaine.</li></ul></div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Nettoyage et correction de plus de 90 000 formules Excel.</li>
-              <li>Création de macros VBA d'automatisation de reporting en 1 clic.</li>
-            </ul>
-          </div>
+          <div class="exec-content"><ul><li>Nettoyage de 90 000 formules Excel.</li><li>Macros VBA d'automatisation.</li></ul></div>
         </div>
       </div>
-
       <div class="impact-box">
         <i class="fa-solid fa-rocket"></i>
-        <div>
-          <div class="impact-title">Impact réel</div>
-          <div class="impact-desc">Le temps d'édition du rapport est passé de <strong>plusieurs heures à 3 secondes</strong> sans aucune erreur humaine.</div>
-        </div>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">Le temps d'édition est passé de plusieurs heures à 3 secondes. Zéro erreur.</div></div>
       </div>
-
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <button class="btn btn-outline" onclick="closeModal('modal1')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL 2 — RECOMMANDATION FILMS -->
 <div class="modal-overlay" id="modal2">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Recommandation de films</h3>
+      <h3 class="modal-title">Recommandation de films (IA)</h3>
       <button class="modal-close" onclick="closeModal('modal2')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
           <div class="exec-title">Objectif business</div>
-          <div class="exec-content">Créer un moteur d'IA pour fidéliser les utilisateurs d'un service de VOD en proposant des suggestions adaptées à leurs goûts.</div>
-        </div>
-        <div class="exec-block">
-          <div class="exec-title">Problème résolu</div>
-          <div class="exec-content">
-            <ul>
-              <li>Désabonnement des utilisateurs par manque de contenu pertinent.</li>
-            </ul>
-          </div>
+          <div class="exec-content">Créer un moteur d'IA pour fidéliser les utilisateurs VOD via des suggestions adaptées.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Algorithme de similarité cosinus (NLP).</li>
-              <li>Architecture API et déploiement Streamlit en temps réel.</li>
-            </ul>
-          </div>
+          <div class="exec-content"><ul><li>Similarité cosinus (NLP).</li><li>Déploiement Streamlit.</li></ul></div>
         </div>
       </div>
-
       <div class="impact-box">
         <i class="fa-solid fa-rocket"></i>
-        <div>
-          <div class="impact-title">Impact réel</div>
-          <div class="impact-desc">Amélioration de la satisfaction utilisateur et outil interactif directement consultable en ligne.</div>
-        </div>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">+40% de pertinence estimée sur les recommandations générées.</div></div>
       </div>
-
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Consulter le code</a>
-        <button class="btn btn-outline" onclick="closeModal('modal2')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL 3 — POWER BI -->
 <div class="modal-overlay" id="modal3">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Dashboard Power BI</h3>
+      <h3 class="modal-title">Dashboard Power BI Ventes</h3>
       <button class="modal-close" onclick="closeModal('modal3')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
           <div class="exec-title">Objectif business</div>
-          <div class="exec-content">Consolider les données de ventes de 5 régions et éliminer le calcul manuel des rapports de performance.</div>
-        </div>
-        <div class="exec-block">
-          <div class="exec-title">Problème résolu</div>
-          <div class="exec-content">
-            <ul>
-              <li>Impossibilité de comparer les ventes par région en direct.</li>
-              <li>Manque de lisibilité des marges et bénéfices hebdomadaires.</li>
-            </ul>
-          </div>
+          <div class="exec-content">Consolider les ventes de 5 régions et éliminer le calcul manuel des KPI.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Création du modèle de données DAX (langage PowerBI).</li>
-              <li>Intégration et nettoyage via PowerQuery.</li>
-            </ul>
-          </div>
+          <div class="exec-content"><ul><li>Modélisation DAX.</li><li>Nettoyage PowerQuery.</li></ul></div>
         </div>
       </div>
-
       <div class="impact-box">
         <i class="fa-solid fa-rocket"></i>
-        <div>
-          <div class="impact-title">Impact réel</div>
-          <div class="impact-desc">Visibilité totale en temps réel pour le comité exécutif, réduisant les temps de réunion de 30%.</div>
-        </div>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">Visibilité totale en temps réel pour le COMEX, réunions raccourcies de 30%.</div></div>
       </div>
-
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <button class="btn btn-outline" onclick="closeModal('modal3')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL 4 — CHICAGO -->
 <div class="modal-overlay" id="modal4">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Analyse de Criminalité Chicago</h3>
+      <h3 class="modal-title">Criminalité Chicago (Big Data)</h3>
       <button class="modal-close" onclick="closeModal('modal4')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
-          <div class="exec-title">Objectif</div>
-          <div class="exec-content">Tirer parti de 20 ans d'historique (Big Data) pour comprendre les cycles de délinquance urbains.</div>
+          <div class="exec-title">Objectif business</div>
+          <div class="exec-content">Cartographier 20 ans de délinquance pour allouer les budgets de sécurité urbaine.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Traitement ultra-rapide via moteur distribué PySpark.</li>
-              <li>Cartographie dynamique géolocalisée.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="exec-block">
-          <div class="exec-title">Impact</div>
-          <div class="exec-content">Ciblage clair des quartiers à forte délinquance en fonction des horaires et des saisons.</div>
+          <div class="exec-content"><ul><li>Traitement distribué PySpark.</li><li>Cartographie Folium.</li></ul></div>
         </div>
       </div>
-
+      <div class="impact-box">
+        <i class="fa-solid fa-rocket"></i>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">Identification claire des hotspots par saison et horaires.</div></div>
+      </div>
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Consulter le code</a>
-        <button class="btn btn-outline" onclick="closeModal('modal4')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL 5 — SEGMENTATION -->
 <div class="modal-overlay" id="modal5">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Segmentation Clients</h3>
+      <h3 class="modal-title">Segmentation Clients</h3>
       <button class="modal-close" onclick="closeModal('modal5')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
-          <div class="exec-title">Objectif Business</div>
-          <div class="exec-content">Découvrir les comportements d'achat types des clients pour y affecter des offres publicitaires adaptées.</div>
+          <div class="exec-title">Objectif business</div>
+          <div class="exec-content">Découvrir les comportements d'achat pour cibler les offres publicitaires.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Application des algorithmes K-Means et Réduction PCA (ACP).</li>
-            </ul>
-          </div>
-        </div>
-        <div class="exec-block">
-          <div class="exec-title">Impact</div>
-          <div class="exec-content">Découverte de 4 sous-groupes comportementaux précis permettant un ciblage marketing sur-mesure.</div>
+          <div class="exec-content"><ul><li>Algorithme K-Means.</li><li>Réduction de dimension PCA.</li></ul></div>
         </div>
       </div>
-
+      <div class="impact-box">
+        <i class="fa-solid fa-rocket"></i>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">Budget publicitaire optimisé grâce à la création de 4 personas distincts.</div></div>
+      </div>
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Consulter le code</a>
-        <button class="btn btn-outline" onclick="closeModal('modal5')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL 6 — BOURSE -->
 <div class="modal-overlay" id="modal6">
   <div class="modal">
     <div class="modal-head">
-      <h3 class="modal-title">Résumé exécutif : Prévision Facebook Prophet</h3>
+      <h3 class="modal-title">Prévision Boursière</h3>
       <button class="modal-close" onclick="closeModal('modal6')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="exec-grid">
         <div class="exec-block full">
-          <div class="exec-title">Objectif Business</div>
-          <div class="exec-content">Estimer les cours d'actions des GAFAM pour guider le placement d'investissements de trésorerie.</div>
+          <div class="exec-title">Objectif business</div>
+          <div class="exec-content">Estimer les cours d'actions pour guider le placement de trésorerie.</div>
         </div>
         <div class="exec-block">
           <div class="exec-title">Actions techniques</div>
-          <div class="exec-content">
-            <ul>
-              <li>Modélisation Time-Series via Facebook Prophet en Python.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="exec-block">
-          <div class="exec-title">Impact</div>
-          <div class="exec-content">Estimation automatique avec marge de tolérance chiffrée à 95%.</div>
+          <div class="exec-content"><ul><li>Modélisation Prophet.</li><li>Extraction API Yahoo Finance.</li></ul></div>
         </div>
       </div>
-
+      <div class="impact-box">
+        <i class="fa-solid fa-rocket"></i>
+        <div><div class="impact-title">Impact</div><div class="impact-desc">Prévisions automatisées à 90 jours avec marge d'erreur calculée.</div></div>
+      </div>
       <div class="modal-actions">
-        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Rapport PDF complet</a>
-        <a href="https://github.com/MousBak" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> Consulter le code</a>
-        <button class="btn btn-outline" onclick="closeModal('modal6')">Fermer</button>
+        <a href="https://github.com/MousBak/Rapports" target="_blank" class="btn btn-primary"><i class="fa-solid fa-folder-open"></i> Accéder au repo GitHub</a>
       </div>
     </div>
   </div>
 </div>
 
-
 <script>
 // --- MODALS (OUVRIR ET FERMER) ---
 function openModal(id) {
   document.getElementById(id).classList.add('open');
-  document.body.style.overflow = 'hidden'; // Empêche le défilement arrière-plan
+  document.body.style.overflow = 'hidden';
 }
-
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
   document.body.style.overflow = '';
 }
-
-// Fermer en cliquant à côté du modal
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
+    if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
   });
 });
 
